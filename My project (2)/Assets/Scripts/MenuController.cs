@@ -8,6 +8,7 @@ public class MenuController : MonoBehaviour
     public Button startButton;
     public Button codeEntryButton;
     public GameObject codeEntryPanel;
+    public Button quitButton;
 
     private void Start()
     {
@@ -16,6 +17,9 @@ public class MenuController : MonoBehaviour
         });
         codeEntryButton.onClick.AddListener(() => {
             codeEntryPanel.SetActive(true);
+            startButton.gameObject.SetActive(false);
+            codeEntryButton.gameObject.SetActive(false);
+            quitButton.gameObject.SetActive(false);
         });
     }
 }

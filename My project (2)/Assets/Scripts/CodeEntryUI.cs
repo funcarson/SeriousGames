@@ -8,6 +8,11 @@ public class CodeEntryUI : MonoBehaviour
     public InputField codeInput;
     public Button submitButton;
     public Text feedbackText;
+    public Button exit;
+    public Button codeButton;
+    public Button quitButton;
+    public Button startButton;
+    public GameObject codeEntryPanel;
 
     // Map of valid codes to unlock keys
     private Dictionary<string, string> codeMap = new Dictionary<string, string> {
@@ -18,6 +23,13 @@ public class CodeEntryUI : MonoBehaviour
     private void Start()
     {
         submitButton.onClick.AddListener(OnSubmit);
+
+        exit.onClick.AddListener(() => {
+            codeEntryPanel.SetActive(false);
+            startButton.gameObject.SetActive(true);
+            codeButton.gameObject.SetActive(true);
+            quitButton.gameObject.SetActive(true);
+        });
     }
 
     private void OnSubmit()
