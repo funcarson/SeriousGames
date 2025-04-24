@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 503dec7e74aeca24083cf9224beaf521, type: 3}
-  m_Name: Track_Basic
+  m_Name: Battery Perfect
   m_EditorClassIdentifier: 
-  partName: Basic Tracks
+  partName: Perfect Battery
   icon: {fileID: 0}
-  cost: 20
-  weight: 0
+  cost: 40
+  weight: 2
   powerUsage: 1
-  speedModifier: 1
-  capacityModifier: 0
+  speedModifier: 0
+  capacityModifier: 200
   sciencePerPhoto: 0
   scannerRange: 0
