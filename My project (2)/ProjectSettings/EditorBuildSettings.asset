@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main Menu.unity
     guid: a4bc6e8ee9ff9a64d8d156a86196b255
+  - enabled: 1
+    path: Assets/Scenes/MarsTerrain.unity
+    guid: d98fedf971d54cb459d7661c9dff6bb7
   m_configObjects: {}
