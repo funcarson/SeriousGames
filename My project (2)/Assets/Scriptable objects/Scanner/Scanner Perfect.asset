@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Scanner Perfect
   m_EditorClassIdentifier: 
   partName: Perfect Scanner
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: fb539e339e6fc2d4785328c35a0c1d32, type: 3}
   cost: 40
   weight: 1
   powerUsage: 1.3

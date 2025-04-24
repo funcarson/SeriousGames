@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Solar Pannel
   m_EditorClassIdentifier: 
   partName: Solar Pannel
-  icon: {fileID: 0}
-  cost: 50
+  icon: {fileID: 21300000, guid: cd512d2a780b68e4b95b8d1559774468, type: 3}
+  cost: 0
   weight: 0.8
   powerUsage: -0.2
   speedModifier: 0

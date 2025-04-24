@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Track_Basic
   m_EditorClassIdentifier: 
   partName: Basic Tracks
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 67e7398731061a3498b862e200f14e5d, type: 3}
   cost: 20
   weight: 1
   powerUsage: 1

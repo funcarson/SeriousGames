@@ -1,34 +1,57 @@
-// RoverBuilderUI.cs
+﻿// RoverBuilderUI.cs
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
 public class RoverBuilderUI : MonoBehaviour
 {
+    [Header("Options")]
     public PartDefinition[] tracksOptions;
     public PartDefinition[] batteryOptions;
     public PartDefinition[] cameraOptions;
     public PartDefinition[] scannerOptions;
     public PartDefinition[] specialOptions;
 
+    [Header("Dropdowns")]
     public Dropdown tracksDropdown;
     public Dropdown batteryDropdown;
     public Dropdown cameraDropdown;
     public Dropdown scannerDropdown;
     public Dropdown specialDropdown;
 
+    [Header("Stat Texts")]
     public Text budgetText;
     public Text speedText;
     public Text batteryLifeText;
-
-    public Button launchButton;
     public Text warningText;
+    public Button launchButton;
+
+    [Header("Tracks Row UI")]
+    public Text tracksCostText;
+    public Image tracksIcon;
+
+    [Header("Battery Row UI")]
+    public Text batteryCostText;
+    public Image batteryIcon;
+
+    [Header("Camera Row UI")]
+    public Text cameraCostText;
+    public Image cameraIcon;
+
+    [Header("Scanner Row UI")]
+    public Text scannerCostText;
+    public Image scannerIcon;
+
+    [Header("Special Row UI")]
+    public Text specialCostText;
+    public Image specialIcon;
 
     private RoverConfiguration config;
 
     void Start()
     {
         config = new RoverConfiguration();
+
         Populate(tracksDropdown, tracksOptions);
         Populate(batteryDropdown, batteryOptions);
         Populate(cameraDropdown, cameraOptions);
@@ -42,6 +65,7 @@ public class RoverBuilderUI : MonoBehaviour
         specialDropdown.onValueChanged.AddListener(_ => OnSelectionChanged());
 
         launchButton.onClick.AddListener(OnLaunch);
+
         OnSelectionChanged();
     }
 
@@ -64,44 +88,35 @@ public class RoverBuilderUI : MonoBehaviour
 
     void UpdateUI()
     {
+        // 1) update totals & stats
+        int totalCost = config.tracks.cost
+                      + config.battery.cost
+                      + config.camera.cost
+                      + config.scanner.cost
+                      + (config.special?.cost ?? 0);
 
-        if (budgetText == null) Debug.LogError("RoverBuilderUI.budgetText is missing!");
-        if (speedText == null) Debug.LogError("RoverBuilderUI.speedText is missing!");
-        if (batteryLifeText == null) Debug.LogError("RoverBuilderUI.batteryLifeText is missing!");
-        if (warningText == null) Debug.LogError("RoverBuilderUI.warningText is missing!");
-        if (launchButton == null) Debug.LogError("RoverBuilderUI.launchButton is missing!");
-
-        int totalCost = config.tracks.cost + config.battery.cost + config.camera.cost + config.scanner.cost + (config.special != null ? config.special.cost : 0);
         budgetText.text = $"Budget: {totalCost}/{GameManager.Instance.currentBudget}";
-        float speed = config.tracks.speedModifier;
-        float capacity = config.battery.capacityModifier;
-        speedText.text = $"Speed: {speed:F1}";
-        batteryLifeText.text = $"Battery Life: {capacity:F0}";
-
-        var trackRow = tracksDropdown.GetComponentInParent<Transform>();
-        trackRow.Find("CostText").GetComponent<Text>().text = $"${config.tracks.cost}";
-        trackRow.Find("IconPreview").GetComponent<Image>().sprite = config.tracks.icon;
-
-        var batteryRow = tracksDropdown.GetComponentInParent<Transform>();
-        batteryRow.Find("CostText").GetComponent<Text>().text = $"${config.battery.cost}";
-        batteryRow.Find("IconPreview").GetComponent<Image>().sprite = config.battery.icon;
-
-        var cameraRow = tracksDropdown.GetComponentInParent<Transform>();
-        cameraRow.Find("CostText").GetComponent<Text>().text = $"${config.camera.cost}";
-        cameraRow.Find("IconPreview").GetComponent<Image>().sprite = config.camera.icon;
-
-        var specialRow = tracksDropdown.GetComponentInParent<Transform>();
-        specialRow.Find("CostText").GetComponent<Text>().text = $"${config.special.cost}";
-        specialRow.Find("IconPreview").GetComponent<Image>().sprite = config.special.icon;
-
-        var scannerRow = tracksDropdown.GetComponentInParent<Transform>();
-        scannerRow.Find("CostText").GetComponent<Text>().text = $"${config.scanner.cost}";
-        scannerRow.Find("IconPreview").GetComponent<Image>().sprite = config.scanner.icon;
-
-
+        speedText.text = $"Speed: {config.tracks.speedModifier:F1}";
+        batteryLifeText.text = $"Battery Life: {config.battery.capacityModifier:F0}";
         bool valid = totalCost <= GameManager.Instance.currentBudget;
-        launchButton.interactable = valid;
         warningText.text = valid ? "" : "Over budget!";
+        launchButton.interactable = valid;
+
+        // 2) update each row explicitly
+        tracksCostText.text = $"${config.tracks.cost}";
+        tracksIcon.sprite = config.tracks.icon;
+
+        batteryCostText.text = $"${config.battery.cost}";
+        batteryIcon.sprite = config.battery.icon;
+
+        cameraCostText.text = $"${config.camera.cost}";
+        cameraIcon.sprite = config.camera.icon;
+
+        scannerCostText.text = $"${config.scanner.cost}";
+        scannerIcon.sprite = config.scanner.icon;
+
+        specialCostText.text = $"${config.special.cost}";
+        specialIcon.sprite = config.special.icon;
     }
 
     void OnLaunch()

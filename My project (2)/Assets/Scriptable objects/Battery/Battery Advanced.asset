@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Battery Advanced
   m_EditorClassIdentifier: 
   partName: Advanced Battery
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 177273537d075194783986e6b106f9e4, type: 3}
   cost: 30
   weight: 1.5
   powerUsage: 1

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Battery Basic
   m_EditorClassIdentifier: 
   partName: Basic Battery
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: da9bfda5ff28d5d46a094de63a84c824, type: 3}
   cost: 20
   weight: 1
   powerUsage: 1
