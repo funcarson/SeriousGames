@@ -24,21 +24,30 @@ public class CodeEntryUI : MonoBehaviour
     {
         submitButton.onClick.AddListener(OnSubmit);
 
-        exit.onClick.AddListener(() => {
+        exit.onClick.AddListener(() =>
+        {
             codeEntryPanel.SetActive(false);
             startButton.gameObject.SetActive(true);
             codeButton.gameObject.SetActive(true);
             quitButton.gameObject.SetActive(true);
         });
     }
-
-    private void OnSubmit()
+    void OnSubmit()
     {
+        if (codeInput == null || submitButton == null || feedbackText == null)
+        {
+            Debug.LogError("Assign all CodeEntryUI fields in the Inspector");
+            return;
+        }
         string code = codeInput.text.Trim().ToUpper();
         if (codeMap.ContainsKey(code) && !GameManager.Instance.unlockedCodes.Contains(code))
         {
             GameManager.Instance.unlockedCodes.Add(code);
             feedbackText.text = "Unlocked: " + codeMap[code];
+
+            // Also reveal the special row if it's in this scene:
+            var builderUI = FindObjectOfType<RoverBuilderUI>();
+            if (builderUI != null) builderUI.ShowSpecialRow();
         }
         else
         {

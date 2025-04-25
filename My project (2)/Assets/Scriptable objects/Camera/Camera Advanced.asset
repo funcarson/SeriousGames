@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Camera Advanced
   m_EditorClassIdentifier: 
   partName: Advanced Camera
-  icon: {fileID: 21300000, guid: 177273537d075194783986e6b106f9e4, type: 3}
+  icon: {fileID: 21300000, guid: 1bcfaf4180752344cb6c0618e9baa1c2, type: 3}
   cost: 30
   weight: 0.7
   powerUsage: 0.8

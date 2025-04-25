@@ -43,6 +43,7 @@ public class RoverBuilderUI : MonoBehaviour
     public Image scannerIcon;
 
     [Header("Special Row UI")]
+    public GameObject specialRow;     // container for the entire Special row
     public Text specialCostText;
     public Image specialIcon;
 
@@ -52,20 +53,43 @@ public class RoverBuilderUI : MonoBehaviour
     {
         config = new RoverConfiguration();
 
+        // Initially show/hide special row
+        bool isUnlocked = GameManager.Instance != null
+                          && GameManager.Instance.unlockedCodes.Contains("SOLAR123");
+        specialRow.SetActive(isUnlocked);
+
         Populate(tracksDropdown, tracksOptions);
         Populate(batteryDropdown, batteryOptions);
         Populate(cameraDropdown, cameraOptions);
         Populate(scannerDropdown, scannerOptions);
-        Populate(specialDropdown, specialOptions);
+
+        if (isUnlocked)
+            Populate(specialDropdown, specialOptions);
+        else
+        {
+            specialDropdown.ClearOptions();
+            specialDropdown.interactable = false;
+        }
 
         tracksDropdown.onValueChanged.AddListener(_ => OnSelectionChanged());
         batteryDropdown.onValueChanged.AddListener(_ => OnSelectionChanged());
         cameraDropdown.onValueChanged.AddListener(_ => OnSelectionChanged());
         scannerDropdown.onValueChanged.AddListener(_ => OnSelectionChanged());
-        specialDropdown.onValueChanged.AddListener(_ => OnSelectionChanged());
+        if (isUnlocked)
+            specialDropdown.onValueChanged.AddListener(_ => OnSelectionChanged());
 
         launchButton.onClick.AddListener(OnLaunch);
 
+        OnSelectionChanged();
+    }
+
+    // Called by CodeEntryUI to reveal the special row at runtime
+    public void ShowSpecialRow()
+    {
+        specialRow.SetActive(true);
+        Populate(specialDropdown, specialOptions);
+        specialDropdown.interactable = true;
+        specialDropdown.onValueChanged.AddListener(_ => OnSelectionChanged());
         OnSelectionChanged();
     }
 
@@ -73,6 +97,7 @@ public class RoverBuilderUI : MonoBehaviour
     {
         dd.ClearOptions();
         dd.AddOptions(options.Select(o => o.partName).ToList());
+        dd.value = 0;
     }
 
     void OnSelectionChanged()
@@ -81,14 +106,17 @@ public class RoverBuilderUI : MonoBehaviour
         config.battery = batteryOptions[batteryDropdown.value];
         config.camera = cameraOptions[cameraDropdown.value];
         config.scanner = scannerOptions[scannerDropdown.value];
-        config.special = specialOptions[specialDropdown.value];
+
+        if (specialRow.activeSelf && specialOptions.Length > 0)
+            config.special = specialOptions[specialDropdown.value];
+        else
+            config.special = null;
 
         UpdateUI();
     }
 
     void UpdateUI()
     {
-        // 1) update totals & stats
         int totalCost = config.tracks.cost
                       + config.battery.cost
                       + config.camera.cost
@@ -98,11 +126,11 @@ public class RoverBuilderUI : MonoBehaviour
         budgetText.text = $"Budget: {totalCost}/{GameManager.Instance.currentBudget}";
         speedText.text = $"Speed: {config.tracks.speedModifier:F1}";
         batteryLifeText.text = $"Battery Life: {config.battery.capacityModifier:F0}";
+
         bool valid = totalCost <= GameManager.Instance.currentBudget;
         warningText.text = valid ? "" : "Over budget!";
         launchButton.interactable = valid;
 
-        // 2) update each row explicitly
         tracksCostText.text = $"${config.tracks.cost}";
         tracksIcon.sprite = config.tracks.icon;
 
@@ -115,13 +143,19 @@ public class RoverBuilderUI : MonoBehaviour
         scannerCostText.text = $"${config.scanner.cost}";
         scannerIcon.sprite = config.scanner.icon;
 
-        specialCostText.text = $"${config.special.cost}";
-        specialIcon.sprite = config.special.icon;
+        if (specialRow.activeSelf && config.special != null)
+        {
+            specialCostText.text = $"${config.special.cost}";
+            specialIcon.sprite = config.special.icon;
+        }
     }
 
     void OnLaunch()
     {
-        GameManager.Instance.currentConfig = config;
+        if (GameManager.Instance != null)
+            GameManager.Instance.currentConfig = config;
         UnityEngine.SceneManagement.SceneManager.LoadScene("MarsTerrain");
     }
 }
+
+

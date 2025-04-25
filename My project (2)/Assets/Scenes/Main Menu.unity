@@ -1996,6 +1996,7 @@ GameObject:
   - component: {fileID: 1574199519}
   - component: {fileID: 1574199518}
   - component: {fileID: 1574199521}
+  - component: {fileID: 1574199522}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2093,6 +2094,29 @@ MonoBehaviour:
   codeEntryButton: {fileID: 271284470}
   codeEntryPanel: {fileID: 422712943}
   quitButton: {fileID: 1341286210}
+--- !u!114 &1574199522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1574199517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 290e9b0a2196481498d450f212a42df6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentBudget: 100
+  unlockedCodes: []
+  currentConfig:
+    tracks: {fileID: 0}
+    battery: {fileID: 0}
+    camera: {fileID: 0}
+    scanner: {fileID: 0}
+    special: {fileID: 0}
+  missionScore: 0
+  missionSamples: 0
+  missionPhotos: 0
 --- !u!1 &1759523160
 GameObject:
   m_ObjectHideFlags: 0
