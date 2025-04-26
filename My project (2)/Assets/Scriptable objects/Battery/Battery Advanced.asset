@@ -18,6 +18,6 @@ MonoBehaviour:
   weight: 1.5
   powerUsage: 1
   speedModifier: 0
-  capacityModifier: 150
+  capacityModifier: 60
   sciencePerPhoto: 0
   scannerRange: 0

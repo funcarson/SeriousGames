@@ -17,7 +17,7 @@ MonoBehaviour:
   cost: 40
   weight: 2
   powerUsage: 1.5
-  speedModifier: 2
+  speedModifier: 1
   capacityModifier: 0
   sciencePerPhoto: 0
   scannerRange: 0

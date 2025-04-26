@@ -1,24 +1,25 @@
-// MissionSummaryUI.cs
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class MissionSummaryUI : MonoBehaviour
 {
-    public Text samplesText;
-    public Text photosText;
-    public Text scoreText;
-    public Text newBudgetText;
+    public TMP_Text photosText;
+    public TMP_Text scoreText;
+    public TMP_Text newBudgetText;
     public Button nextButton;
 
     void Start()
     {
-        samplesText.text = $"Samples Collected: {GameManager.Instance.missionSamples}";
+        //Populate from GameManager
         photosText.text = $"Photos Taken: {GameManager.Instance.missionPhotos}";
         scoreText.text = $"Science Points: {GameManager.Instance.missionScore}";
         newBudgetText.text = $"New Budget: {GameManager.Instance.currentBudget}";
-        nextButton.onClick.AddListener(() => {
-            SceneManager.LoadScene("RoverBuilder");
-        });
+
+        nextButton.onClick.AddListener(() =>
+            SceneManager.LoadScene("RoverBuilder")
+        );
     }
 }
+

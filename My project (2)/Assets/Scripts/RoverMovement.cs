@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class RoverMovement : MonoBehaviour
 {
-    public float baseSpeed = 5f;
+    public static float baseSpeed = 5f;
     private Rigidbody2D rb;
     private TouchJoystick joystick;
 

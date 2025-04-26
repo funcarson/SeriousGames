@@ -2429,7 +2429,6 @@ GameObject:
   - component: {fileID: 1960582734}
   - component: {fileID: 1960582733}
   - component: {fileID: 1960582732}
-  - component: {fileID: 1960582735}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2511,29 +2510,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1960582735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1960582731}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 290e9b0a2196481498d450f212a42df6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentBudget: 100
-  unlockedCodes: []
-  currentConfig:
-    tracks: {fileID: 0}
-    battery: {fileID: 0}
-    camera: {fileID: 0}
-    scanner: {fileID: 0}
-    special: {fileID: 0}
-  missionScore: 0
-  missionSamples: 0
-  missionPhotos: 0
 --- !u!114 &2008677775 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3581799490218750351, guid: ad3f52a534f60df469bcee12a68c8bd3, type: 3}

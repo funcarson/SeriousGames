@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class RoverBuilderUI : MonoBehaviour
 {
@@ -117,32 +118,63 @@ public class RoverBuilderUI : MonoBehaviour
 
     void UpdateUI()
     {
+        // 1) Calculate total cost and update budget display
         int totalCost = config.tracks.cost
                       + config.battery.cost
                       + config.camera.cost
                       + config.scanner.cost
                       + (config.special?.cost ?? 0);
-
         budgetText.text = $"Budget: {totalCost}/{GameManager.Instance.currentBudget}";
-        speedText.text = $"Speed: {config.tracks.speedModifier:F1}";
-        batteryLifeText.text = $"Battery Life: {config.battery.capacityModifier:F0}";
 
+        // 2) Sum up weight and power usage from all parts
+        float totalWeight = config.tracks.weight
+                          + config.battery.weight
+                          + config.camera.weight
+                          + config.scanner.weight
+                          + (config.special?.weight ?? 0f);
+
+        float totalPowerUsage = config.tracks.powerUsage
+                              + config.battery.powerUsage
+                              + config.camera.powerUsage
+                              + config.scanner.powerUsage
+                              + (config.special?.powerUsage ?? 0f);
+
+        // 3) Compute and display effective speed
+        //    Assumes RoverMovement.BaseSpeed is your unladen speed constant
+        float effectiveSpeed = RoverMovement.baseSpeed
+                             * config.tracks.speedModifier
+                             / totalWeight;
+        speedText.text = $"Speed: {effectiveSpeed:F1}";
+
+        // 4) Compute and display effective battery life (in seconds)
+        float effectiveBatteryLife = config.battery.capacityModifier
+                                   / totalPowerUsage;
+        batteryLifeText.text = $"Battery Life: {effectiveBatteryLife:F0}s";
+
+        // 5) Budget validity and warning
         bool valid = totalCost <= GameManager.Instance.currentBudget;
         warningText.text = valid ? "" : "Over budget!";
         launchButton.interactable = valid;
 
+        // 6) Update each component row’s cost and icon
+
+        // Tracks
         tracksCostText.text = $"${config.tracks.cost}";
         tracksIcon.sprite = config.tracks.icon;
 
+        // Battery
         batteryCostText.text = $"${config.battery.cost}";
         batteryIcon.sprite = config.battery.icon;
 
+        // Camera
         cameraCostText.text = $"${config.camera.cost}";
         cameraIcon.sprite = config.camera.icon;
 
+        // Scanner
         scannerCostText.text = $"${config.scanner.cost}";
         scannerIcon.sprite = config.scanner.icon;
 
+        // Special (only if unlocked and selected)
         if (specialRow.activeSelf && config.special != null)
         {
             specialCostText.text = $"${config.special.cost}";
@@ -155,6 +187,10 @@ public class RoverBuilderUI : MonoBehaviour
         if (GameManager.Instance != null)
             GameManager.Instance.currentConfig = config;
         UnityEngine.SceneManagement.SceneManager.LoadScene("MarsTerrain");
+
+        GameManager.Instance.ClearRunData();    // <-- reset run‐local data
+        GameManager.Instance.currentConfig = config;
+        SceneManager.LoadScene("MarsTerrain");
     }
 }
 

@@ -21,6 +21,12 @@ public class MenuController : MonoBehaviour
             codeEntryButton.gameObject.SetActive(false);
             quitButton.gameObject.SetActive(false);
         });
+
+        // Quit the application
+        quitButton.onClick.AddListener(() =>
+        {
+            Application.Quit();
+        });
     }
 }
 
