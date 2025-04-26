@@ -1,11 +1,12 @@
 // PhotoPopup.cs
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PhotoPopup : MonoBehaviour
 {
     public Image displayImage;
-    public Text captionText;
+    public TMP_Text captionText;
     public Button closeButton;
 
     public void Show(Sprite image, string caption, int points)
